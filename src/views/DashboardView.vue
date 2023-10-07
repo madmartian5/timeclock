@@ -209,7 +209,21 @@ const editingValue = ref<string>('');
 
     // Assuming the date part should be the same and only time part is changing
     // Extract the date part from the existing startTime or endTime
-    const existingDate = type === 'start' ? new Date(breakTaken.startTime) : new Date(breakTaken.endTime);
+    //const existingDate = type === 'start' ? new Date(breakTaken.startTime) : new Date(breakTaken.endTime);
+
+    let existingDate: Date;
+    if (type === 'start') {
+        existingDate = new Date(breakTaken.startTime);
+    } else {
+        if (breakTaken.endTime) {
+            existingDate = new Date(breakTaken.endTime);
+        } else {
+            console.error('End time is not defined');
+            return;
+        }
+    }
+
+
     
     // Extract the hour, minute, and second from the editingValue
     // Assuming editingValue is in the format HH:mm:ss
