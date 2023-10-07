@@ -3,7 +3,7 @@ import { computed, ref, onMounted, onUnmounted } from 'vue';
 import { useEmployeeStore } from '../stores/employeeStore';
 import { Employee, TimeEntry } from '../types/employee.model';
 import breakSchedule from '../lib/breakSchedule';
-import { calculateTimeDifference } from '../lib/utils';
+import { calculateTimeDifference, calculateEmployeeClockedInTime } from '../lib/utils';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
@@ -41,33 +41,6 @@ const selectedEmployeeTimeEntries = computed(() => {
   return null;
 });
 
-
-const calculateEmployeeWorkedHours = (employee: Employee) => {
-  let totalHours = 0;
-  let totalMinutes = 0;
-
-  for (const entry of employee.timeEntries) {
-    let endTime: dayjs.Dayjs;
-    if (entry.endTime) {
-      endTime = dayjs(entry.endTime).tz("Pacific/Auckland");
-    } else if (employee.clockedIn) {
-      endTime = dayjs().tz("Pacific/Auckland");
-    } else {
-      continue;
-    }
-
-    const { hours, minutes } = calculateTimeDifference(entry.startTime, endTime.toISOString());
-    totalHours += hours;
-    totalMinutes += minutes;
-  }
-
-  // Convert any sets of 60 minutes into hours
-  totalHours += Math.floor(totalMinutes / 60);
-  totalMinutes %= 60;
-
-  return `${totalHours.toString().padStart(2, '0')}:${totalMinutes.toString().padStart(2, '0')}`;
-};
-
 const groupedTimeEntries = computed(() => {
   const grouped: { [id: number]: { [date: string]: TimeEntry[] } } = {};
 
@@ -83,7 +56,8 @@ const groupedTimeEntries = computed(() => {
         return; // Skip this entry if no endTime and not currently clocked in
       }
 
-      const { hours, minutes } = calculateTimeDifference(entry.startTime, endTime.toISOString());
+      //const { hours, minutes } = calculateTimeDifference(entry.startTime, endTime.toISOString());
+      const { hours, minutes } = calculateTimeDifference(entry.startTime, endTime);
       entry.duration = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 
       const date = dayjs(entry.startTime).tz("Pacific/Auckland").format('YYYY-MM-DD');
@@ -128,7 +102,7 @@ const handleStorageChange = (e: StorageEvent) => {
 const entitledBreaks = computed(() => {
     if (!selectedEmployee.value) return [];
 
-    const workedHours = parseFloat(calculateEmployeeWorkedHours(
+    const workedHours = parseFloat(calculateEmployeeClockedInTime(
         employeeStore.employees.find(emp => emp.id === selectedEmployee.value) as Employee
     ).replace(':', '.')); // Assuming format hh:mm
 

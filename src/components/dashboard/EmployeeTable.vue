@@ -22,8 +22,14 @@
 <script setup lang="ts">
   import { computed } from 'vue';
   import { useEmployeeStore } from '../../stores/employeeStore';
-  import { Employee } from '../../types/employee.model';
-  import { calculateTimeDifference } from '../../lib/utils';
+  import { calculateEmployeeClockedInTime } from '../../lib/utils';
+  import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+
+// Use plugins
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
   const emit = defineEmits();
   const employeeStore = useEmployeeStore();
@@ -47,41 +53,6 @@
       clockedInTime: calculateEmployeeClockedInTime(employee)
     }));
   });
-
-
-  /**
-   * Calculates the total clocked-in time for a given employee.
-   * Iterates through all time entries of the employee, calculates the time difference for each entry,
-   * and accumulates the total hours and minutes. Converts sets of 60 minutes into hours.
-   * 
-   * @param employee - The employee object for whom the total clocked-in time is to be calculated
-   * @returns A string representing the total clocked-in time in the format HH:mm
-   */
-  const calculateEmployeeClockedInTime = (employee: Employee) => {
-    let totalHours = 0;
-    let totalMinutes = 0;
-
-    for (const entry of employee.timeEntries) {
-      let endTime: Date;
-      if (entry.endTime) {
-        endTime = new Date(entry.endTime);
-      } else if (employee.clockedIn) {
-        endTime = new Date(); // Use current time if employee is still clocked in
-      } else {
-        continue; // Skip this entry if no endTime and not currently clocked in
-      }
-
-      const { hours, minutes } = calculateTimeDifference(entry.startTime, endTime);
-      totalHours += hours;
-      totalMinutes += minutes;
-    }
-
-    // Convert any sets of 60 minutes into hours
-    totalHours += Math.floor(totalMinutes / 60);
-    totalMinutes %= 60;
-
-    return `${totalHours.toString().padStart(2, '0')}:${totalMinutes.toString().padStart(2, '0')}`;
-};
 
 </script>
 
