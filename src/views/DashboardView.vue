@@ -57,7 +57,7 @@ const groupedTimeEntries = computed(() => {
       }
 
       //const { hours, minutes } = calculateTimeDifference(entry.startTime, endTime.toISOString());
-      const { hours, minutes } = calculateTimeDifference(entry.startTime, endTime);
+      const { hours, minutes } = calculateTimeDifference(entry.startTime, endTime.toISOString());
       entry.duration = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 
       const date = dayjs(entry.startTime).tz("Pacific/Auckland").format('YYYY-MM-DD');
