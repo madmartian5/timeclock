@@ -27,6 +27,7 @@
 
   const emit = defineEmits();
   const employeeStore = useEmployeeStore();
+  
 
   /**
    * Sets the selected employee, so that the dashboard can display the employee's time and break entries
