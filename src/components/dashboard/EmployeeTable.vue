@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-  import { computed, defineEmits } from 'vue';
+  import { computed } from 'vue';
   import { useEmployeeStore } from '../../stores/employeeStore';
   import { Employee } from '../../types/employee.model';
   import { calculateTimeDifference } from '../../lib/utils';
