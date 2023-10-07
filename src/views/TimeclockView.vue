@@ -179,49 +179,51 @@ const clockIn = () => {
 
 
 const clockOut = () => {
-  if (!currentEmployee.value) return;
+  const currentEmployeeValue = currentEmployee.value;
+  if (!currentEmployeeValue) return;
+
   const userConfirmed = window.confirm('Are you sure you want to clock out?');
   if (!userConfirmed) return;
-  currentEmployee.value.clockedIn = false;
-  const latestEntry = currentEmployee.value.timeEntries.find(entry => !entry.endTime);
+
+  currentEmployeeValue.clockedIn = false;
+  const latestEntry = currentEmployeeValue.timeEntries.find(entry => !entry.endTime);
   if (latestEntry) {
-    // Use Day.js to get the current time in ISO format
     latestEntry.endTime = dayjs().toISOString();
   }
 
-  //we need to end any breaks that are currently in progress
-  if (currentEmployee.value.currentBreak) {
+  // We need to end any breaks that are currently in progress
+  if (currentEmployeeValue.currentBreak) {
     endBreak();
   }
 
-  //we need to calculate the total hours worked today and adjust for any breaks taken or entitled breaks not taken
+  // We need to calculate the total hours worked today and adjust for any breaks taken or entitled breaks not taken
   
   // Calculate total hours worked
-  const totalHoursWorked = getTotalHoursForToday(currentEmployee.value);
+  const totalHoursWorked = getTotalHoursForToday(currentEmployeeValue);
 
   // Determine entitled breaks
   const entitledBreaks = getEntitledBreaks(totalHoursWorked);
 
   // Check for missing breaks
   entitledBreaks.forEach((entitledBreak) => {
-    const breakTaken = currentEmployee.value.breaksTaken?.find(b => b.breakId === entitledBreak.id);
+    const breakTaken = currentEmployeeValue.breaksTaken?.find(b => b.breakId === entitledBreak.id);
     if (!breakTaken) {
       // Add a zero-minute break
       const zeroMinuteBreak: BreakTaken = {
         breakId: entitledBreak.id,
         startTime: dayjs().toISOString(),
-        endTime: dayjs().toISOString(), // or null, depending on your model
-        // ... other properties ...
+        endTime: dayjs().toISOString(),
       };
-      if (!currentEmployee.value.breaksTaken) {
-        currentEmployee.value.breaksTaken = [];
+      if (!currentEmployeeValue.breaksTaken) {
+        currentEmployeeValue.breaksTaken = [];
       }
-      currentEmployee.value.breaksTaken.push(zeroMinuteBreak);
+      currentEmployeeValue.breaksTaken.push(zeroMinuteBreak);
     }
   });
 
   employeeStore.saveEmployees();
 };
+
 
 
 const addHour = () => {
