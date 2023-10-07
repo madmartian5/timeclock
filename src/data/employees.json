@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Emily Greenwood",
+    "key": "111",
+    "clockedIn": false,
+    "timeEntries": [],
+    "breaksTaken": []
+  },
+  {
+    "id": 2,
+    "name": "Courtney Aitken",
+    "key": "222",
+    "clockedIn": false,
+    "timeEntries": [],
+    "breaksTaken": []
+  },
+  {
+    "id": 3,
+    "name": "Leila",
+    "key": "333",
+    "clockedIn": false,
+    "timeEntries": [],
+    "breaksTaken": []
+  }
+]
