@@ -1,6 +1,5 @@
 <script setup lang="ts">
   import { globalProperties } from '../lib/globals';
-  import SocialIcons from './SocialIcons.vue';
 
 
 </script>
@@ -15,6 +14,5 @@
         {{ globalProperties.title }} {{ globalProperties.version }}
       </p>
     </div>
-    <SocialIcons />
   </footer>
 </template>
