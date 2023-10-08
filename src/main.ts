@@ -11,6 +11,7 @@ app.use(pinia)
 async function setupApp() {
   try {
     // Register the service worker
+    /*
     if ('serviceWorker' in navigator) {
       await navigator.serviceWorker.register('/sw.js')
         .then((registration) => {
@@ -20,6 +21,7 @@ async function setupApp() {
           console.error('Service Worker registration failed:', error);
         });
     }
+    */
   } catch (error) {
     console.error("Error during app setup:", error);
   }
