@@ -9,31 +9,6 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 
-/**
- * Shorten string by adding .... in the middle
- * @param value 
- * @param numChars 
- * @returns string
- */
-export function shortenString(value: string, numChars: number) {
-    if (typeof value !== 'string' || value.length <= numChars * 2) {
-      return value;
-    }
-  
-    const start = value.substring(0, numChars);
-    const end = value.substring(value.length - numChars);
-    return start + '....' + end;
-}
-
-/**
- * Capitalize first letter of a string
- * @param name 
- * @returns string
- */
-export function capitalizeFirstLetter(name: string) {
-  return name.charAt(0).toUpperCase() + name.slice(1);
-};
-
 export function calculateTimeDifference(startTime: string, endTime: string | Date) {
   // Convert start time to NZ timezone
   const nzStartTime = dayjs(startTime).tz("Pacific/Auckland");

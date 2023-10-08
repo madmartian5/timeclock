@@ -56,7 +56,6 @@ const groupedTimeEntries = computed(() => {
         return; // Skip this entry if no endTime and not currently clocked in
       }
 
-      //const { hours, minutes } = calculateTimeDifference(entry.startTime, endTime.toISOString());
       const { hours, minutes } = calculateTimeDifference(entry.startTime, endTime.toISOString());
       entry.duration = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 

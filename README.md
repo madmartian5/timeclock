@@ -16,4 +16,4 @@
 7. Export hours
 
 TODO:
-1. Need to check the dates when clocking in / out and taking breaks.. seems like there is a bug there.
+1. Should only show the current shifts breaks on dashboard

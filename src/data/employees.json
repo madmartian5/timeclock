@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "name": "Emily Greenwood",
+    "name": "Emily",
     "key": "111",
     "clockedIn": false,
     "timeEntries": [],
@@ -9,7 +9,7 @@
   },
   {
     "id": 2,
-    "name": "Courtney Aitken",
+    "name": "Courtney",
     "key": "222",
     "clockedIn": false,
     "timeEntries": [],

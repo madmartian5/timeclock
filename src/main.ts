@@ -10,18 +10,6 @@ app.use(pinia)
 
 async function setupApp() {
   try {
-    /*
-    const web3Store = useWeb3Store();
-    web3Store.checkZilPayIsInstalled();
-
-    await CarbMigrationAPI.fetchAndSetDataFromSmartContract();
-
-    if (typeof window.zilPay !== 'undefined' && window.zilPay.wallet.isConnect) {
-      web3Store.handleAccountChange();
-      web3Store.handleNetworkChange();
-    }
-    */
-
 
   } catch (error) {
     console.error("Error during app setup:", error);
