@@ -1,7 +1,5 @@
 <script setup lang="ts">
   import { globalProperties } from '../lib/globals';
-
-
 </script>
 
 <template>

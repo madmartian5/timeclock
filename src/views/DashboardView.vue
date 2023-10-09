@@ -265,39 +265,37 @@ const editingValue = ref<string>('');
             </div>
 
             <!-- Breaks Table -->
-<div v-if="selectedEmployee">
-    <h2 class="text-xl mt-8 mb-4">Breaks for {{ selectedEmployeeName }}</h2>
-    <table v-if="entitledBreaks.length > 0" class="min-w-full bg-white mt-4">
-        <thead>
-            <tr>
-                <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm uppercase font-bold">Break Description</th>
-                <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm uppercase font-bold">Start Time</th>
-                <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm uppercase font-bold">End Time</th>
-                <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm uppercase font-bold">Duration</th>
-                <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm uppercase font-bold">Taken</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="breakDefinition in entitledBreaks" :key="breakDefinition.id">
-                <td class="py-2 px-4 border-b border-gray-200 text-sm">{{ breakDefinition.duration }}min {{ breakDefinition.type }} break</td>
-                
-                <td class="py-2 px-4 border-b border-gray-200 text-sm">
-    <template v-if="isEditing(breakDefinition.id, 'start')">
-        <input type="time" v-model="editingValue" @blur="saveBreakTime(breakDefinition.id, 'start')" @keyup.enter="saveBreakTime(breakDefinition.id, 'start')">
-    </template>
-    <template v-else>
-        <span @click="editBreakTime(breakDefinition.id, 'start', getBreakTakenTime(breakDefinition.id, 'start'))">{{ getBreakTakenTime(breakDefinition.id, 'start') }}</span>
-    </template>
-</td>
-
-                <td class="py-2 px-4 border-b border-gray-200 text-sm">{{ getBreakTakenTime(breakDefinition.id, 'end') }}</td>
-                <td class="py-2 px-4 border-b border-gray-200 text-sm">{{ getBreakTakenTime(breakDefinition.id, 'duration') }}</td>
-                <td class="py-2 px-4 border-b border-gray-200 text-sm">{{ isBreakTaken(breakDefinition.id) ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
-    <p v-else class="mt-4 text-gray-600">No breaks data available.</p>
-</div>
+            <div v-if="selectedEmployee">
+                <h2 class="text-xl mt-8 mb-4">Breaks for {{ selectedEmployeeName }}</h2>
+                <table v-if="entitledBreaks.length > 0" class="min-w-full bg-white mt-4">
+                    <thead>
+                        <tr>
+                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm uppercase font-bold">Break Description</th>
+                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm uppercase font-bold">Start Time</th>
+                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm uppercase font-bold">End Time</th>
+                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm uppercase font-bold">Duration</th>
+                            <th class="py-2 px-4 border-b border-gray-200 bg-gray-100 text-left text-sm uppercase font-bold">Taken</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="breakDefinition in entitledBreaks" :key="breakDefinition.id">
+                            <td class="py-2 px-4 border-b border-gray-200 text-sm">{{ breakDefinition.duration }}min {{ breakDefinition.type }} break</td>
+                            <td class="py-2 px-4 border-b border-gray-200 text-sm">
+                                <template v-if="isEditing(breakDefinition.id, 'start')">
+                                    <input type="time" v-model="editingValue" @blur="saveBreakTime(breakDefinition.id, 'start')" @keyup.enter="saveBreakTime(breakDefinition.id, 'start')">
+                                </template>
+                                <template v-else>
+                                    <span @click="editBreakTime(breakDefinition.id, 'start', getBreakTakenTime(breakDefinition.id, 'start'))">{{ getBreakTakenTime(breakDefinition.id, 'start') }}</span>
+                                </template>
+                            </td>
+                            <td class="py-2 px-4 border-b border-gray-200 text-sm">{{ getBreakTakenTime(breakDefinition.id, 'end') }}</td>
+                            <td class="py-2 px-4 border-b border-gray-200 text-sm">{{ getBreakTakenTime(breakDefinition.id, 'duration') }}</td>
+                            <td class="py-2 px-4 border-b border-gray-200 text-sm">{{ isBreakTaken(breakDefinition.id) ? 'Yes' : 'No' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p v-else class="mt-4 text-gray-600">No breaks data available.</p>
+            </div>
         </div>
     </div>
 </template>
